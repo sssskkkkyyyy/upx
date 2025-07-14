@@ -599,6 +599,12 @@ void ElfLinkerAMD64::relocate1(const Relocation *rel, byte *location, upx_uint64
         super::relocate1(rel, location, value, type);
 }
 
+//step1 TODO
+void ElfLinkerLoong64LE::relocate1(const Relocation *rel, byte *location, upx_uint64_t value,
+                               const char *type) {
+
+}
+
 void ElfLinkerArmBE::relocate1(const Relocation *rel, byte *location, upx_uint64_t value,
                                const char *type) {
     if (!strcmp(type, "R_ARM_PC24") || !strcmp(type, "R_ARM_CALL") ||

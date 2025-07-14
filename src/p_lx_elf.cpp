@@ -1190,6 +1190,12 @@ Linker* PackLinuxElf64amd::newLinker() const
     return new ElfLinkerAMD64;
 }
 
+//step1
+Linker* PackLinuxElf64loong::newLinker() const
+{
+    return new ElfLinkerLoong64LE;
+}
+
 Linker* PackLinuxElf64arm::newLinker() const
 {
     return new ElfLinkerArm64LE;
@@ -1392,6 +1398,19 @@ PackLinuxElf64amd::PackLinuxElf64amd(InputFile *f)
     ei_osabi  = Elf32_Ehdr::ELFOSABI_LINUX;
 }
 
+//step1
+PackLinuxElf64loong::PackLinuxElf64loong(InputFile *f)
+    : super(f)
+{
+    lg2_page = 12;
+    page_size = 1u << lg2_page;
+    e_machine = Elf64_Ehdr::EM_LOONGARCH;
+    ei_class = Elf64_Ehdr::ELFCLASS64;
+    ei_data = Elf64_Ehdr::ELFDATA2LSB;
+    ei_osabi = Elf32_Ehdr::ELFOSABI_LINUX; 
+}
+
+
 PackLinuxElf64arm::PackLinuxElf64arm(InputFile *f)
     : super(f)
 {
@@ -1402,6 +1421,11 @@ PackLinuxElf64arm::PackLinuxElf64arm(InputFile *f)
 }
 
 PackLinuxElf64amd::~PackLinuxElf64amd()
+{
+}
+
+//step1
+PackLinuxElf64loong::~PackLinuxElf64loong()
 {
 }
 
@@ -5288,6 +5312,28 @@ void PackLinuxElf64amd::pack1(OutputFile *fo, Filter &ft)
         return;
     generateElfHdr(fo, stub_amd64_linux_elf_fold, getbrk(phdri, e_phnum) );
 }
+
+//step1
+//TODO
+int const* PackLinuxElf64loong::getFilters() const {
+    return nullptr; // 或参考其他架构的实现
+}
+
+void PackLinuxElf64loong::buildLoader(Filter const* ft) {
+    // TODO: 实现加载器构建逻辑
+    (void)ft;
+}
+
+void PackLinuxElf64loong::pack1(OutputFile* f, Filter& ft) {
+    (void)f;
+    (void)ft;
+}
+
+void PackLinuxElf64loong::defineSymbols(Filter const* ft) {
+    (void)ft;
+    // TODO: 添加符号定义逻辑
+}
+
 
 void PackLinuxElf64arm::pack1(OutputFile *fo, Filter &ft)
 {

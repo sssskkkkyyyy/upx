@@ -161,6 +161,18 @@ protected:
                            const char *type) override;
 };
 
+//step1
+class ElfLinkerLoong64LE final : public ElfLinker {
+    typedef ElfLinker super;
+protected:
+    virtual void alignCode(unsigned len) override {
+        alignWithByte(len, 0x00); // LoongArch 的 NOP 是 0x00000000
+    }
+
+    virtual void relocate1(const Relocation *reloc, byte *location,
+                           upx_uint64_t value, const char *type) override;
+};
+
 class ElfLinkerArm64LE final : public ElfLinker {
     typedef ElfLinker super;
 protected:

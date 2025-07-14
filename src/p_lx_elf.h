@@ -533,6 +533,24 @@ protected:
     virtual void defineSymbols(Filter const *) override;
 };
 
+//Step1: add the new class
+class PackLinuxElf64loong : public PackLinuxElf64Le
+{
+    typedef PackLinuxElf64Le super;
+public:
+    PackLinuxElf64loong(InputFile *f);
+    virtual ~PackLinuxElf64loong();
+    virtual int getFormat() const override { return UPX_F_LINUX_ELF64_LOONGARCH64; }
+    virtual const char *getName() const override { return "linux/loong64"; }
+    virtual const char *getFullName(const options_t *) const override { return "loongarch64-linux.elf"; }
+    virtual const int *getFilters() const override;
+protected:
+    virtual void pack1(OutputFile *, Filter &) override;  // generate executable header
+    virtual void buildLoader(const Filter *) override;
+    virtual Linker* newLinker() const override;
+    virtual void defineSymbols(Filter const *) override;
+};
+
 class PackLinuxElf64arm : public PackLinuxElf64Le
 {
     typedef PackLinuxElf64Le super;
