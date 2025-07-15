@@ -1256,6 +1256,17 @@ PackLinuxElf64amd::getFilters() const
     return filters;
 }
 
+//step1 TODO
+int const *
+PackLinuxElf64loong::getFilters() const
+{
+    // static const int filters[] = {
+    //     0x52,
+    // FT_END };
+    // return filters;
+    return nullptr;
+}
+
 int const *
 PackLinuxElf64arm::getFilters() const
 {
@@ -1918,6 +1929,13 @@ PackLinuxElf64amd::defineSymbols(Filter const *ft)
 {
     PackLinuxElf64::defineSymbols(ft);
 }
+
+//step1，参考amd?
+void PackLinuxElf64loong::defineSymbols(Filter const *ft)
+{
+    PackLinuxElf64::defineSymbols(ft);
+}
+
 
 static const CLANG_FORMAT_DUMMY_STATEMENT
 #include "stub/i386-linux.elf-entry.h"
@@ -5315,10 +5333,6 @@ void PackLinuxElf64amd::pack1(OutputFile *fo, Filter &ft)
 
 //step1
 //TODO
-int const* PackLinuxElf64loong::getFilters() const {
-    return nullptr; // 或参考其他架构的实现
-}
-
 void PackLinuxElf64loong::buildLoader(Filter const* ft) {
     // TODO: 实现加载器构建逻辑
     (void)ft;
@@ -5327,11 +5341,6 @@ void PackLinuxElf64loong::buildLoader(Filter const* ft) {
 void PackLinuxElf64loong::pack1(OutputFile* f, Filter& ft) {
     (void)f;
     (void)ft;
-}
-
-void PackLinuxElf64loong::defineSymbols(Filter const* ft) {
-    (void)ft;
-    // TODO: 添加符号定义逻辑
 }
 
 
