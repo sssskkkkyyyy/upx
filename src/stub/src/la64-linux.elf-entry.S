@@ -144,6 +144,7 @@ ok_memfd:
     sub.d     $t2, $t1, 0  //t2=elfaddr=&sz_pack2-sz_pack2
     la.pcrel  $t4, o_binfo
     ld.d      $t5, $t4, 0  //t5保存O_BINFO
+    addi.d    $r21, $t5, 0 //r21保存O_BINFO
     addi.d    $t4, $t4, 4
 INSURANCE=0x10
     ld.d      $t3, $t4, 0
@@ -211,7 +212,6 @@ CACHELINE=8*NBPW
 #define len  $t2  /* XXX: 2GB */
 #define lenq $t3
 #define dispq $t4
-#define displ $t5
 
 #define GETBIT jirl $a0, $t6, 0
 //t6保存getbit函数地址,读取的比特位于t7最低位
@@ -325,7 +325,7 @@ eof_n2b:
     st.d      $a0, $old_sp, F_ADRU
 
     addi.d    $arg1, $arg5, 0
-    addo.d    $a7, $zero, __NR_close
+    addi.d    $a7, $zero, __NR_close
     syscall   0
 
 // use the copy
