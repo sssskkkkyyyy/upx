@@ -18,6 +18,7 @@ f_expand:
 #define fx_dst $a1
 #define fx_dstlen $a2
 #define meth  $a4
+#define methb $a4
 
 sz_unc= 0
 sz_cpr= 4
